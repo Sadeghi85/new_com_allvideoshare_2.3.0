@@ -54,16 +54,16 @@ class AllVideoShareModelPlayer extends AllVideoShareModel {
 		 	$result .= $video->thirdparty;
 			$result .= '</div>';
 		 } else {		    
-			if(preg_match('/msie 10/i', $_SERVER['HTTP_USER_AGENT']) || strpos($_SERVER['HTTP_USER_AGENT'], 'Trident/7.0') !== false) {
-		    	$result = $this->gethtmlplayer( $video );
-			} else {
+			//if(preg_match('/msie 10/i', $_SERVER['HTTP_USER_AGENT']) || strpos($_SERVER['HTTP_USER_AGENT'], 'Trident/7.0') !== false) {
+		    //	$result = $this->gethtmlplayer( $video );
+			//} else {
 				$flashvars = 'base='.JURI::root().'&amp;vid=' . $video->id . '&amp;pid=' . $playerid . '&amp;sef=' . $this->avs_rewrite_enabled();
 				if( $lang = JRequest::getCmd('lang', '') ) {
 					$flashvars .= '&amp;lang=' . $lang;
 				}
 				$detect = new IsMobile();			
 		    	$result = $detect->isMobile() ? $this->gethtmlplayer( $video ) : $this->getflashplayer( $player, $video, $flashvars );	
-			}
+			//}
 		 }		
 		 
 		 $this->updateviews( $video->slug );

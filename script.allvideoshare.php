@@ -182,6 +182,28 @@ class COM_AllVideoShareInstallerScript {
 			$db->query();
 		}
 		
+		if(array_key_exists('comments_type', $fields_config)) {
+			$query = "ALTER TABLE #__allvideoshare_config MODIFY COLUMN `comments_type` VARCHAR(50) NOT NULL DEFAULT '' AFTER `search`";
+			$db->setQuery($query);
+			$db->query();
+		}
+		
+		if(!array_key_exists('cdn_url', $fields_config)) {
+			$query = "ALTER TABLE #__allvideoshare_config ADD `cdn_url` VARCHAR(255) NOT NULL DEFAULT '' AFTER `css`";
+			$db->setQuery($query);
+			$db->query();
+		}
+		if(!array_key_exists('cdn_username', $fields_config)) {
+			$query = "ALTER TABLE #__allvideoshare_config ADD `cdn_username` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cdn_url`";
+			$db->setQuery($query);
+			$db->query();
+		}
+		if(!array_key_exists('cdn_password', $fields_config)) {
+			$query = "ALTER TABLE #__allvideoshare_config ADD `cdn_password` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cdn_username`";
+			$db->setQuery($query);
+			$db->query();
+		}
+		
 		// Remove old version files		
 		if (JFile::exists(JPATH_ADMINISTRATOR.'/components/com_allvideoshare/tables/allvideosharecategories.php')) {
 			JFile::delete(JPATH_ADMINISTRATOR.'/components/com_allvideoshare/tables/allvideosharecategories.php');

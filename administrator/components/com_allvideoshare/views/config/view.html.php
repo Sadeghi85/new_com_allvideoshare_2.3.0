@@ -35,7 +35,7 @@ class AllVideoShareViewConfig extends AllVideoShareView {
 		$layout = JHTML::_('select.genericlist', $layout_options, 'layout', 'onchange="javascript:changeType(this.options[this.selectedIndex].value);"', 'value', 'text', $data->layout);
 		$this->assignRef('layout', $layout);
 		
-		$comments_type_options[] = JHTML::_('select.option', 'facebook', JText::_('FACEBOOK_COMMENTS'));
+		//$comments_type_options[] = JHTML::_('select.option', 'facebook', JText::_('FACEBOOK_COMMENTS'));
 		$comments_type_options[] = JHTML::_('select.option', 'jcomments', JText::_('JCOMMENTS'));
 		$comments_type_options[] = JHTML::_('select.option', 'komento', JText::_('KOMENTO'));
 		$comments_type = JHTML::_('select.genericlist', $comments_type_options, 'comments_type', 'onchange="javascript:changeComments(this.options[this.selectedIndex].value);"', 'value', 'text', $data->comments_type);

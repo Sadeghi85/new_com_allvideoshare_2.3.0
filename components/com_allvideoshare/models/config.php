@@ -12,6 +12,7 @@ defined('_JEXEC') or die('Restricted access');
 
 // Import libraries
 require_once( JPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_allvideoshare'.DS.'models'.DS.'model.php' );
+require_once( JPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_allvideoshare'.DS.'etc'.DS.'commercial.php' );
 
 class AllVideoShareModelConfig extends AllVideoShareModel {
 
@@ -75,7 +76,8 @@ class AllVideoShareModelConfig extends AllVideoShareModel {
 			$node .= $this->generatePostroll();			
 		}
 		$node .= '<dvr>'.$this->castAsBoolean( $video->dvr ).'</dvr>'."\n";
-		$node .= '<license>'.$licensing->licensekey.'</license>'."\n";
+		//$node .= '<license>'.$licensing->licensekey.'</license>'."\n";
+		$node .= '<license>'.AllVideoShareCommercial::getLicenseKey().'</license>'."\n";
 		$node .= '<displayLogo>'.$this->castAsBoolean( $licensing->displaylogo ).'</displayLogo>'."\n";
 		$node .= '<logo>'.$licensing->logo.'</logo>'."\n";
 		$node .= '<logoAlpha>'.$licensing->logoalpha.'</logoAlpha>'."\n";

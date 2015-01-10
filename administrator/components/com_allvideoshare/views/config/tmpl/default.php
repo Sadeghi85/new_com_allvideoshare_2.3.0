@@ -40,6 +40,27 @@ $data = $this->data;
         <td><input type="text" name="thumb_height" value="<?php echo $data->thumb_height; ?>" /></td>
       </tr>
     </table>
+	
+	<!-- -->
+	<?php 
+		AllVideoShareFallback::initPanel(JText::_('CDN_SETTINGS'), 'cdnsettingstab');
+  	?>
+    <table class="admintable">
+      <tr>
+        <td class="avskey"><?php echo JText::_('CDN_URL'); ?></td>
+        <td><input type="text" name="cdn_url" value="<?php echo $data->cdn_url; ?>" /></td>
+      </tr>
+      <tr>
+        <td class="avskey"><?php echo JText::_('CDN_USERNAME'); ?></td>
+        <td><input type="text" name="cdn_username" value="<?php echo $data->cdn_username; ?>" /></td>
+      </tr>
+      <tr>
+        <td class="avskey"><?php echo JText::_('CDN_PASSWORD'); ?></td>
+        <td><input type="text" name="cdn_password" value="<?php echo $data->cdn_password; ?>" /></td>
+      </tr>
+    </table>
+	<!-- -->
+	
     <?php AllVideoShareFallback::initPanel(JText::_('VIDEO_PAGE_SETTINGS'), 'videopagesettings', true); ?>
     <table class="admintable">
       <tr>
