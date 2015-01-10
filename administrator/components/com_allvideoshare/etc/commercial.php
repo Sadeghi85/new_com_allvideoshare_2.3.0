@@ -13,7 +13,7 @@ class AllVideoShareCommercial {
 	
 	public static function getLicenseKey()
 	{
-		$host = preg_replace('#^.*?([^.]+\.[^.]+)$#', '$1', $_SERVER['HTTP_HOST']);
+		$host = preg_replace('#^.*?([^.]+\.[^.]+)$#', '$1', preg_replace('#:.*#', '', $_SERVER['HTTP_HOST']));
 		$charInputBit = 16;
 		
 		return self::_bin_to_hex(self::_sha1_convert(self::_string_to_bin($host, $charInputBit), (strlen($host) * $charInputBit)));
