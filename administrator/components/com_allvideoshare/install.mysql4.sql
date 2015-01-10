@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `#__allvideoshare_config` (
   `category` tinyint(4) NOT NULL,
   `views` tinyint(4) NOT NULL,
   `search` tinyint(4) NOT NULL,
-  `comments_type` varchar(50) NOT NULL DEFAULT 'facebook',
+  `comments_type` varchar(50) NOT NULL DEFAULT '',
   `fbappid` VARCHAR(25) NOT NULL,
   `comments_posts` int(3) NOT NULL,
   `comments_width` int(3) NOT NULL,
@@ -104,6 +104,9 @@ CREATE TABLE IF NOT EXISTS `#__allvideoshare_config` (
   `type_bitgravity` tinyint(4) NOT NULL,
   `type_thirdparty` tinyint(4) NOT NULL DEFAULT '1',
   `css` text NOT NULL,
+  `cdn_url` varchar(255) NOT NULL DEFAULT '',
+  `cdn_username` varchar(255) NOT NULL DEFAULT '',
+  `cdn_password` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 );
 

@@ -66,14 +66,18 @@ class AllVideoShareViewVideos extends AllVideoShareView {
 		$user = $userobj->get('username');
 		$this->assignRef('user', $user);
 		
-		$type_options[] = JHTML::_('select.option', 'url', JText::_('DIRECT_URL'));
-		$type_options[] = JHTML::_('select.option', 'upload', JText::_('GENERAL_UPLOAD'));
-		$type_options[] = JHTML::_('select.option', 'youtube', JText::_('YOUTUBE'));
-		$type_options[] = JHTML::_('select.option', 'rtmp', JText::_('RTMP_STREAMING'));
 		$type_options[] = JHTML::_('select.option', 'lighttpd', JText::_('LIGHTTPD'));
-		$type_options[] = JHTML::_('select.option', 'highwinds', JText::_('HIGHWINDS'));
-		$type_options[] = JHTML::_('select.option', 'bitgravity', JText::_('BITGRAVITY'));
-		$type_options[] = JHTML::_('select.option', 'thirdparty', JText::_('THIRD_PARTY_EMBEDCODE'));		
+		$type_options[] = JHTML::_('select.option', 'cdn_upload', JText::_('CDN_UPLOAD'));
+		
+		//$type_options[] = JHTML::_('select.option', 'url', JText::_('DIRECT_URL'));
+		//$type_options[] = JHTML::_('select.option', 'upload', JText::_('GENERAL_UPLOAD'));
+		
+		//$type_options[] = JHTML::_('select.option', 'youtube', JText::_('YOUTUBE'));
+		$type_options[] = JHTML::_('select.option', 'rtmp', JText::_('RTMP_STREAMING'));
+		
+		//$type_options[] = JHTML::_('select.option', 'highwinds', JText::_('HIGHWINDS'));
+		//$type_options[] = JHTML::_('select.option', 'bitgravity', JText::_('BITGRAVITY'));
+		$type_options[] = JHTML::_('select.option', 'thirdparty', JText::_('THIRD_PARTY_EMBEDCODE'));	
 		$type = JHTML::_('select.genericlist', $type_options, 'type', 'onchange="javascript:changeType(this.options[this.selectedIndex].value);"', 'value', 'text', '');
 		$this->assignRef('type', $type);
 		
@@ -116,13 +120,13 @@ class AllVideoShareViewVideos extends AllVideoShareView {
 		$data = $model->getrow();
 		$this->assignRef('data', $data);
 		
-		$type_options[] = JHTML::_('select.option', 'url', JText::_('DIRECT_URL'));
-		$type_options[] = JHTML::_('select.option', 'upload', JText::_('GENERAL_UPLOAD'));
-		$type_options[] = JHTML::_('select.option', 'youtube', JText::_('YOUTUBE'));
-		$type_options[] = JHTML::_('select.option', 'rtmp', JText::_('RTMP_STREAMING'));
+		//$type_options[] = JHTML::_('select.option', 'url', JText::_('DIRECT_URL'));
+		//$type_options[] = JHTML::_('select.option', 'upload', JText::_('GENERAL_UPLOAD'));
+		//$type_options[] = JHTML::_('select.option', 'youtube', JText::_('YOUTUBE'));
 		$type_options[] = JHTML::_('select.option', 'lighttpd', JText::_('LIGHTTPD'));
-		$type_options[] = JHTML::_('select.option', 'highwinds', JText::_('HIGHWINDS'));
-		$type_options[] = JHTML::_('select.option', 'bitgravity', JText::_('BITGRAVITY'));
+		$type_options[] = JHTML::_('select.option', 'rtmp', JText::_('RTMP_STREAMING'));
+		//$type_options[] = JHTML::_('select.option', 'highwinds', JText::_('HIGHWINDS'));
+		//$type_options[] = JHTML::_('select.option', 'bitgravity', JText::_('BITGRAVITY'));
 		$type_options[] = JHTML::_('select.option', 'thirdparty', JText::_('THIRD_PARTY_EMBEDCODE'));		
 		$type = JHTML::_('select.genericlist', $type_options, 'type', 'onchange="javascript:changeType(this.options[this.selectedIndex].value);"', 'value', 'text', $data->type);
 		$this->assignRef('type', $type);

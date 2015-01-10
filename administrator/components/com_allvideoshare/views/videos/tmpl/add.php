@@ -54,6 +54,22 @@ defined('_JEXEC') or die('Restricted access');
         <td class="avskey"><?php echo JText::_('PREVIEW'); ?></td>
         <td><input type="text" name="preview" size="60" /></td>
       </tr>
+	  
+	  <!-- -->
+	  <tr id="upload_cdn_video">
+        <td class="avskey"><?php echo JText::_('VIDEO'); ?></td>
+        <td><input type="file" name="cdn_video" maxlength="100" /></td>
+      </tr>
+      <tr id="upload_cdn_thumb">
+        <td class="avskey"><?php echo JText::_('THUMB'); ?></td>
+        <td><input type="file" name="cdn_thumb" maxlength="100" /></td>
+      </tr>
+      <tr id="upload_cdn_preview">
+        <td class="avskey"><?php echo JText::_('PREVIEW'); ?></td>
+        <td><input type="file" name="cdn_preview" maxlength="100" /></td>
+      </tr>
+	  <!-- -->
+	  
       <tr id="upload_data_video">
         <td class="avskey"><?php echo JText::_('VIDEO'); ?></td>
         <td><input type="file" name="upload_video" maxlength="100" /></td>
@@ -151,7 +167,24 @@ function valForm() {
        	return false;
 	}
 	
-	if(method == 'upload') {
+	if(method == 'cdn_upload') {
+		if(form.cdn_video.value == '') {
+       		alert( "<?php echo JText::_( 'YOU_MUST_ADD_A_VIDEO', true); ?>" );
+       		return false;
+	    } else {
+			isAllowed = checkExtension('VIDEO', form.cdn_video.value, videoExtensions);
+			if(isAllowed == false) 	return false;
+		}
+		if(form.cdn_thumb.value) {
+       		isAllowed = checkExtension('THUMB', form.cdn_thumb.value, imageExtensions);
+			if(isAllowed == false) 	return false;
+		}
+		if(form.cdn_preview.value) {
+			isAllowed = checkExtension('PREVIEW', form.cdn_preview.value, imageExtensions);
+			if(isAllowed == false) 	return false;
+		}
+	}
+	else if(method == 'upload') {
 		if(form.upload_video.value == '') {
        		alert( "<?php echo JText::_( 'YOU_MUST_ADD_A_VIDEO', true); ?>" );
        		return false;
@@ -229,6 +262,11 @@ function checkExtension(type, filePath, validExtensions) {
 }
 
 function changeType(typ) {
+
+	document.getElementById('upload_cdn_video').style.display           = "none";
+	document.getElementById('upload_cdn_thumb').style.display           = "none";
+	document.getElementById('upload_cdn_preview').style.display         = "none";
+
 	document.getElementById('url_data_video').style.display              = "none";
 	document.getElementById('url_data_hd').style.display                 = "none";
 	document.getElementById('url_data_thumb').style.display              = "none";
@@ -249,6 +287,13 @@ function changeType(typ) {
 			document.getElementById('url_data_thumb').style.display      = "";
 			document.getElementById('url_data_preview').style.display    = "";
 			break;
+			
+		case 'cdn_upload':
+			document.getElementById('upload_cdn_video').style.display   = "";
+			document.getElementById('upload_cdn_thumb').style.display   = "";
+			document.getElementById('upload_cdn_preview').style.display = "";
+			break;
+			
 		case 'upload':
 			document.getElementById('upload_data_video').style.display   = "";
 			document.getElementById('upload_data_hd').style.display      = "";

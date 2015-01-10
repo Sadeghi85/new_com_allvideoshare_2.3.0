@@ -23,7 +23,7 @@ $column = 0;
 $isResponsive = ($responsive == 1) ? ' avs_responsive' : '';
 
 $document = JFactory::getDocument();
-$document->addStyleSheet(JURI::root()."components/com_allvideoshare/css/allvideoshare.css?r=".rand(), 'text/css', "screen");
+$document->addStyleSheet(JURI::root()."components/com_allvideoshare/css/allvideoshare.css", 'text/css', "screen");
 $document->addStyleSheet( JURI::root()."components/com_allvideoshare/css/allvideoshareupdate.css", 'text/css', "screen");
 ?>
 

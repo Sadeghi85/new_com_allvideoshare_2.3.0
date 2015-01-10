@@ -263,7 +263,7 @@ class AllVideoShareModelCategories extends AllVideoShareModel {
 	  	}
 	  
 	    if(!$row->thumb && !JRequest::getCmd('upload_thumb')) {
-			$row->thumb = 'http://img.youtube.com/vi/default.jpg';
+			$row->thumb = JURI::root().'components/com_allvideoshare/assets/default.jpg';
 		}
 		 
 		$row->reorder( "parent=$row->parent" );
