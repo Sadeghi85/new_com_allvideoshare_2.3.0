@@ -32,6 +32,7 @@
   </uninstall>
   <languages folder="components/language">
     <language tag="en-GB">en-GB/en-GB.com_allvideoshare.ini</language>
+	<language tag="fa-IR">fa-IR/fa-IR.com_allvideoshare.ini</language>
   </languages>
   <files folder="components/com_allvideoshare">
     <folder>assets</folder>
@@ -67,6 +68,9 @@
       <language tag="en-GB">en-GB/en-GB.com_allvideoshare.ini</language>
       <language tag="en-GB">en-GB/en-GB.com_allvideoshare.menu.ini</language>
       <language tag="en-GB">en-GB/en-GB.com_allvideoshare.sys.ini</language>
+	  <language tag="fa-IR">fa-IR/fa-IR.com_allvideoshare.ini</language>
+	  <language tag="fa-IR">fa-IR/fa-IR.com_allvideoshare.menu.ini</language>
+	  <language tag="fa-IR">fa-IR/fa-IR.com_allvideoshare.sys.ini</language>
     </languages>
   </administration>
   <modules>

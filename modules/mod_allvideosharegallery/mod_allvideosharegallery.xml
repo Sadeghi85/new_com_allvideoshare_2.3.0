@@ -17,6 +17,7 @@
   </files>
   <languages folder="language">
     <language tag="en-GB">en-GB/en-GB.mod_allvideosharegallery.ini</language>
+	<language tag="fa-IR">fa-IR/fa-IR.mod_allvideosharegallery.ini</language>
   </languages>
   <params addpath="/administrator/components/com_allvideoshare/elements">
     <param name="type" type="list" label="GALLERY_TYPE_LABEL" description="GALLERY_TYPE_DESCRIPTION" default="videos" >

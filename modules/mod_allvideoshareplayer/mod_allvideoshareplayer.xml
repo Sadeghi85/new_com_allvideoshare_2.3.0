@@ -16,6 +16,7 @@
   </files>
   <languages folder="language">
     <language tag="en-GB">en-GB/en-GB.mod_allvideoshareplayer.ini</language>
+	<language tag="fa-IR">fa-IR/fa-IR.mod_allvideoshareplayer.ini</language>
   </languages>
   <params addpath="/administrator/components/com_allvideoshare/elements">
     <param name="playerid" type="players" default="1" label="SELECT_PLAYER_LABEL" description="SELECT_PLAYER_DESCRIPTION" />
