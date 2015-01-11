@@ -19,7 +19,7 @@ $category = $this->category;
 ?>
 
 <div class="avs_user<?php echo $this->escape($this->params->get('pageclass_sfx')); ?>">
-  <form action="index.php" method="post" name="adminForm" id="adminForm" onsubmit="return submitbutton();" enctype="multipart/form-data">
+  <form action="/index.php" method="post" name="adminForm" id="adminForm" onsubmit="return submitbutton();" enctype="multipart/form-data">
     <table cellpadding="0" cellspacing="0" border="0" width="100%">
       <tr>
       	<td></td>
@@ -33,10 +33,26 @@ $category = $this->category;
         <td class="avskey"><?php echo JText::_('TITLE'); ?></td>
         <td><input type="text" name="title" size="60" /></td>
       </tr>
+	  <tr id="upload_cdn_video">
+        <td class="avskey"><?php echo JText::_('VIDEO'); ?></td>
+        <td id="cdn_video"><input type="file" name="cdn_video" maxlength="100" />
+        </td>
+      </tr>
+      <tr id="upload_cdn_thumb">
+        <td class="avskey"><?php echo JText::_('THUMB'); ?></td>
+        <td id="cdn_thumb"><input type="file" name="cdn_thumb" maxlength="100" /></td>
+      </tr>
+      <tr id="upload_cdn_preview">
+        <td class="avskey"><?php echo JText::_('PREVIEW'); ?></td>
+        <td id="cdn_preview"><input type="file" name="cdn_preview" maxlength="100" /></td>
+      </tr>
       <tr>
         <td class="avskey"><?php echo JText::_('DESCRIPTION'); ?></td>
         <td><?php echo AllVideoShareFallback::getEditor('description'); ?></td>
       </tr>
+	  <input type="hidden" id="type" name="type" value="cdn_upload">
+
+	  <!--
       <tr>
       	<td></td>
         <td><h3><?php echo JText::_('VIDEO_INPUT_SETTINGS'); ?></h3></td>
@@ -121,6 +137,8 @@ $category = $this->category;
         <td class="avskey"><?php echo JText::_('META_DESCRIPTION'); ?></td>
         <td><textarea name="metadescription" rows="6" cols="50" ></textarea></td>
       </tr>
+	  -->
+
       <tr>
         <td></td>
         <td><input type="submit" class="btn" value="<?php echo JText::_('SAVE_VIDEO'); ?>" /></td>
@@ -143,7 +161,7 @@ var type            = document.getElementById("type");
 var videoExtensions = ['flv', 'mp4' , '3g2', '3gp', 'aac', 'f4b', 'f4p', 'f4v', 'm4a', 'm4v', 'mov', 'sdp', 'vp6', 'smil'];
 var imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
 var isAllowed       = true;
-changeType('url');
+changeType('cdn_upload');
 
 function submitbutton() {
 	var method = type.options[type.selectedIndex].value;
@@ -158,7 +176,25 @@ function submitbutton() {
        	return false;
 	}
 	
-	if(method == 'upload') {
+	if(method == 'cdn_upload') {
+		if(form.cdn_video.value == '') {
+       		alert( "<?php echo JText::_( 'YOU_MUST_ADD_A_VIDEO', true); ?>" );
+       		return false;
+	    } else {
+			isAllowed = checkExtension('VIDEO', form.cdn_video.value, videoExtensions);
+			if(isAllowed == false) 	return false;
+		}
+		
+		if(form.cdn_thumb.value) {
+			isAllowed = checkExtension('PREVIEW', form.cdn_thumb.value, imageExtensions);
+			if(isAllowed == false) 	return false;
+		}
+		
+		if(form.cdn_preview.value) {
+			isAllowed = checkExtension('PREVIEW', form.cdn_preview.value, imageExtensions);
+			if(isAllowed == false) 	return false;
+		}
+	} else if(method == 'upload') {
 		if(form.upload_video.value == '') {
        		alert( "<?php echo JText::_( 'YOU_MUST_ADD_A_VIDEO', true); ?>" );
        		return false;
@@ -228,6 +264,10 @@ function checkExtension(type, filePath, validExtensions) {
 }
 
 function changeType(typ) {
+	//document.getElementById('upload_cdn_video').style.display           = "none";
+	//document.getElementById('upload_cdn_thumb').style.display           = "none";
+	//document.getElementById('upload_cdn_preview').style.display         = "none";
+
 	document.getElementById('url_data_video').style.display              = "none";
 	document.getElementById('url_data_hd').style.display                 = "none";
 	document.getElementById('upload_data_video').style.display           = "none";
@@ -244,6 +284,11 @@ function changeType(typ) {
 			document.getElementById('url_data_hd').style.display         = "";
 			document.getElementById('upload_data_thumb').style.display   = "";
 			document.getElementById('upload_data_preview').style.display = "";
+			break;
+		case 'cdn_upload':
+			document.getElementById('upload_cdn_video').style.display    = "";
+			document.getElementById('upload_cdn_thumb').style.display    = "";
+			document.getElementById('upload_cdn_preview').style.display  = "";
 			break;
 		case 'upload':
 			document.getElementById('upload_data_video').style.display   = "";

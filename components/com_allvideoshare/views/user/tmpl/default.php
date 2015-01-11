@@ -31,8 +31,9 @@ $document->addStyleSheet( JURI::root()."components/com_allvideoshare/css/allvide
 <?php 
 	endif;
 	AllVideoShareFallback::startTabs();
-	AllVideoShareFallback::initPanel(JText::_('MY_VIDEOS'), 'myvideos');
+	//AllVideoShareFallback::initPanel(JText::_('MY_VIDEOS'), 'myvideos');
 ?>
+<!--
 <div class="avs_user<?php echo $this->escape($this->params->get('pageclass_sfx')); ?>">
   <table cellpadding="0px" cellspacing="1px" border="0" width="100%">
     <thead>
@@ -68,6 +69,7 @@ $document->addStyleSheet( JURI::root()."components/com_allvideoshare/css/allvide
   </table>
 </div>
 <div id="avs_pagination<?php echo $this->escape($this->params->get('pageclass_sfx')); ?>"><?php echo $this->pagination->getPagesLinks(); ?></div>
+-->
 <?php
 	AllVideoShareFallback::initPanel(JText::_('ADD_NEW_VIDEO'), 'addnew', true);
     echo $this->loadTemplate('add');

@@ -127,6 +127,7 @@ $data = $this->data;
         <td class="avskey"><?php echo JText::_('AUTO_APPROVE_USER_ADDED_VIDEOS'); ?></td>
         <td><?php echo AllVideoShareUtils::ListBoolean('auto_approval', $data->auto_approval); ?></td>
       </tr>
+	  <!--
       <tr>        
         <td class="avskey"><?php echo JText::_('ALLOW_USERS_TO_ADD_YOUTUBE_VIDEOS'); ?></td>
         <td><?php echo AllVideoShareUtils::ListBoolean('type_youtube', $data->type_youtube); ?></td>
@@ -154,6 +155,7 @@ $data = $this->data;
             &nbsp;<?php echo JText::_('DEPRECATED'); ?>
         </td>
       </tr>
+	  -->
     </table>
     <?php AllVideoShareFallback::initPanel(JText::_('FRONT_END_STYLESHEET'), 'frontendstylesheet', true); ?>
     <table class="admintable">

@@ -85,7 +85,7 @@ class AllVideoShareModelUser extends AllVideoShareModel {
 		 $list = JHTML::_('menu.treerecurse', 0, '', array(), $children, 9999, 0, 0 );		
 		 return $list;
 	}
-	
+
 	function getrow() {
      	 $db = JFactory::getDBO();
          $row = JTable::getInstance('Videos', 'AllVideoShareTable');
@@ -94,6 +94,21 @@ class AllVideoShareModelUser extends AllVideoShareModel {
          $row->load($id);
 
          return $row;
+	}
+	
+	function getcdnsettings() {
+		$db = JFactory::getDBO();
+        $row = JTable::getInstance('Config', 'AllVideoShareTable');
+		// id: 1
+        $row->load(1);
+
+		$settings = array();
+		$settings['username'] = $row->cdn_username;
+		$settings['password'] = $row->cdn_password;
+		$settings['address']  = preg_replace('#^(?:http://)?([^/]+).*#i', '$1', $row->cdn_url);
+		$settings['url']      = $row->cdn_url;
+		
+		return $settings;
 	}
 	
 	function savevideo() {
@@ -116,30 +131,53 @@ class AllVideoShareModelUser extends AllVideoShareModel {
 	  	 $row->description = JRequest::getVar('description', '', 'post', 'string', JREQUEST_ALLOWHTML);
 		 $row->thirdparty = JRequest::getVar('thirdparty', '', 'post', 'string', JREQUEST_ALLOWRAW);
 	  
-	  	 if($row->type != 'youtube') {
+		 if($row->type == 'cdn_upload') {
 			//$dir = JFilterOutput::stringURLSafe( $row->category );
 			$dir = JFilterOutput::stringURLUnicodeSlug( $row->category );
-		 	if(!JFolder::exists(ALLVIDEOSHARE_UPLOAD_BASE . $dir . DS)) {
+			$settings = $this->getcdnsettings();
+			$settings['directory'] = JFilterOutput::stringURLSafe( $row->category );
+			
+			if(!JFolder::exists(ALLVIDEOSHARE_UPLOAD_BASE . $dir . DS)) {
 				JFolder::create(ALLVIDEOSHARE_UPLOAD_BASE . $dir . DS);
 			}
-		
-			if($row->type == 'upload') {
-				$row->video = AllVideoShareUpload::doUpload('upload_video', $dir);
-				$row->hd = AllVideoShareUpload::doUpload('upload_hd', $dir);
-			}
 			
-			if($row->type != 'upload') {
-				$row->video = AllVideoShareFallback::safeString($row->video);
-				$row->hd = AllVideoShareFallback::safeString($row->hd);
-			}
+			$row->video = AllVideoShareUpload::doFtpUpload('cdn_video', $settings);
 			
-			if($row->type == 'rtmp') {
-				$row->streamer = AllVideoShareFallback::safeString($row->streamer);
-			}
+			$row->thumb = AllVideoShareUpload::doUpload('cdn_thumb', $dir);
+			$row->preview = AllVideoShareUpload::doUpload('cdn_preview', $dir);
 			
-	  		$row->thumb = AllVideoShareUpload::doUpload('upload_thumb', $dir);
-			$row->preview = AllVideoShareUpload::doUpload('upload_preview', $dir);
-	  	 }
+			$row->type = 'lighttpd';
+			
+			if ( ! $row->video) {
+				JError::raiseError(500, 'Upload Faild');
+			}
+		 }
+			 
+	  	 // if($row->type != 'youtube') {
+			// ###//$dir = JFilterOutput::stringURLSafe( $row->category );
+			// $dir = JFilterOutput::stringURLUnicodeSlug( $row->category );
+			
+		 	// if(!JFolder::exists(ALLVIDEOSHARE_UPLOAD_BASE . $dir . DS)) {
+				// JFolder::create(ALLVIDEOSHARE_UPLOAD_BASE . $dir . DS);
+			// }
+
+			// if($row->type == 'upload') {
+				// $row->video = AllVideoShareUpload::doUpload('upload_video', $dir);
+				// $row->hd = AllVideoShareUpload::doUpload('upload_hd', $dir);
+			// }
+			
+			// if($row->type != 'upload') {
+				// $row->video = AllVideoShareFallback::safeString($row->video);
+				// $row->hd = AllVideoShareFallback::safeString($row->hd);
+			// }
+			
+			// if($row->type == 'rtmp') {
+				// $row->streamer = AllVideoShareFallback::safeString($row->streamer);
+			// }
+			
+	  		// $row->thumb = AllVideoShareUpload::doUpload('upload_thumb', $dir);
+			// $row->preview = AllVideoShareUpload::doUpload('upload_preview', $dir);
+	  	 // }
 	  	 
 		 if($row->type == 'youtube') {
 	      	$v = $this->getYouTubeVideoId($row->video);
