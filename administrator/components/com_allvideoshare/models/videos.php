@@ -176,6 +176,21 @@ class AllVideoShareModelVideos extends AllVideoShareModel {
          return $row;
 	}
 	
+	function getcdnsettings() {
+		$db = JFactory::getDBO();
+        $row = JTable::getInstance('Config', 'AllVideoShareTable');
+		// id: 1
+        $row->load(1);
+
+		$settings = array();
+		$settings['username'] = $row->cdn_username;
+		$settings['password'] = $row->cdn_password;
+		$settings['address']  = preg_replace('#^(?:http://)?([^/]+).*#i', '$1', $row->cdn_url);
+		$settings['url']      = $row->cdn_url;
+		
+		return $settings;
+	}
+	
 	function save() {
 		 $mainframe = JFactory::getApplication();
 	  	 $row = JTable::getInstance('Videos', 'AllVideoShareTable');
@@ -193,9 +208,32 @@ class AllVideoShareModelVideos extends AllVideoShareModel {
 	  	 if(!$row->slug) $row->slug = $row->title;
 		 //$row->slug  = JFilterOutput::stringURLSafe($row->slug);
 		 $row->slug  = JFilterOutput::stringURLUnicodeSlug($row->slug);
+		 
 	  	 $row->description = JRequest::getVar('description', '', 'post', 'string', JREQUEST_ALLOWHTML);
 		 $row->thirdparty  = JRequest::getVar('thirdparty', '', 'post', 'string', JREQUEST_ALLOWRAW);
 	  
+		 if($row->type == 'cdn_upload') {
+			//$dir = JFilterOutput::stringURLSafe( $row->category );
+			$dir = JFilterOutput::stringURLUnicodeSlug( $row->category );
+			$settings = $this->getcdnsettings();
+			$settings['directory'] = JFilterOutput::stringURLSafe( $row->category );
+			
+		 	if(!JFolder::exists(ALLVIDEOSHARE_UPLOAD_BASE . $dir . DS)) {
+				JFolder::create(ALLVIDEOSHARE_UPLOAD_BASE . $dir . DS);
+			}
+			
+			$row->video = AllVideoShareUpload::doFtpUpload('cdn_video', $settings);
+			
+	  		$row->thumb = AllVideoShareUpload::doUpload('cdn_thumb', $dir);
+			$row->preview = AllVideoShareUpload::doUpload('cdn_preview', $dir);
+			
+			$row->type = 'lighttpd';
+			
+			if ( ! $row->video) {
+				JError::raiseError(500, 'Upload Faild');
+			}
+	  	 }
+		 
 	  	 if($row->type == 'upload') {		
 			//$dir = JFilterOutput::stringURLSafe( $row->category );
 			$dir = JFilterOutput::stringURLUnicodeSlug( $row->category );
