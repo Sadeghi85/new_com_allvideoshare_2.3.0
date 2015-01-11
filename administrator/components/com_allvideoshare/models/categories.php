@@ -251,7 +251,8 @@ class AllVideoShareModelCategories extends AllVideoShareModel {
 	  	//$row->name = JRequest::getVar('name', '', 'post', 'string', JREQUEST_ALLOWHTML);
 		$row->name = JString::trim($row->name);
 	  	if(!$row->slug) $row->slug = $row->name;
-		$row->slug = JFilterOutput::stringURLSafe($row->slug);
+		//$row->slug = JFilterOutput::stringURLSafe($row->slug);
+		$row->slug = JFilterOutput::stringURLUnicodeSlug($row->slug);
 	  
 	  	if($row->type == 'upload') {
 			$dir = JFilterOutput::stringURLSafe( $row->name );	

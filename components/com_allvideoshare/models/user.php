@@ -110,13 +110,15 @@ class AllVideoShareModelUser extends AllVideoShareModel {
 		 jimport( 'joomla.filter.output' );
 		 $row->title = AllVideoShareFallback::safeString($row->title);
 	  	 if(!$row->slug) $row->slug = $row->title;		
-		 $row->slug = JFilterOutput::stringURLSafe($row->slug);
+		 //$row->slug = JFilterOutput::stringURLSafe($row->slug);
+		 $row->slug = JFilterOutput::stringURLUnicodeSlug($row->slug);
 		 
 	  	 $row->description = JRequest::getVar('description', '', 'post', 'string', JREQUEST_ALLOWHTML);
 		 $row->thirdparty = JRequest::getVar('thirdparty', '', 'post', 'string', JREQUEST_ALLOWRAW);
 	  
 	  	 if($row->type != 'youtube') {
-			$dir = JFilterOutput::stringURLSafe( $row->category );
+			//$dir = JFilterOutput::stringURLSafe( $row->category );
+			$dir = JFilterOutput::stringURLUnicodeSlug( $row->category );
 		 	if(!JFolder::exists(ALLVIDEOSHARE_UPLOAD_BASE . $dir . DS)) {
 				JFolder::create(ALLVIDEOSHARE_UPLOAD_BASE . $dir . DS);
 			}

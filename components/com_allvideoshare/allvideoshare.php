@@ -28,9 +28,11 @@ define( 'ALLVIDEOSHARE_UPLOAD_BASEURL', JURI::root().str_replace( DS, '/', UPLOA
 // Require the base controller
 if(JRequest::getCmd('view') == '') {
 	JRequest::setVar('view', 'categories');
-} else if(JRequest::getCmd('view') == 'category' && !JRequest::getCmd('slg')){
+//} else if(JRequest::getCmd('view') == 'category' && !JRequest::getCmd('slg')){
+} else if(JRequest::getCmd('view') == 'category' && !JRequest::getVar('slg')){
 	JRequest::setVar('view', 'categories');
-} else if(JRequest::getCmd('view') == 'video' && !JRequest::getCmd('slg')){
+//} else if(JRequest::getCmd('view') == 'video' && !JRequest::getCmd('slg')){
+} else if(JRequest::getCmd('view') == 'video' && !JRequest::getVar('slg')){
 	JRequest::setVar('view', 'videos');
 }
 

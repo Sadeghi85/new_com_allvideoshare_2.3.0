@@ -50,7 +50,9 @@ class AllVideoShareModelVideos extends AllVideoShareModel {
 		
 		 if ( $search ) {
 		 	$escaped = (ALLVIDEOSHARE_JVERSION == '3.0') ? $db->escape( $search, true ) : $db->getEscaped( $search, true );
-			$where[] = 'LOWER(title) LIKE '.$db->Quote( '%'.$escaped.'%', false );
+			//$where[] = 'LOWER(title) LIKE '.$db->Quote( '%'.$escaped.'%', false );
+			$escaped = $db->Quote( '%'.$escaped.'%', false );
+			$where[] = sprintf('(LOWER(title) LIKE %s OR LOWER(user) LIKE %s OR LOWER(category) LIKE %s)', $escaped, $escaped, $escaped);
 		 }
 
 		 $where = ( count( $where ) ? ' WHERE '. implode( ' AND ', $where ) : '' );
@@ -189,12 +191,15 @@ class AllVideoShareModelVideos extends AllVideoShareModel {
 	  	 //$row->title = JRequest::getVar('title', '', 'post', 'string', JREQUEST_ALLOWHTML);
 		 $row->title = AllVideoShareFallback::safeString($row->title);
 	  	 if(!$row->slug) $row->slug = $row->title;
-		 $row->slug  = JFilterOutput::stringURLSafe($row->slug);
+		 //$row->slug  = JFilterOutput::stringURLSafe($row->slug);
+		 $row->slug  = JFilterOutput::stringURLUnicodeSlug($row->slug);
 	  	 $row->description = JRequest::getVar('description', '', 'post', 'string', JREQUEST_ALLOWHTML);
 		 $row->thirdparty  = JRequest::getVar('thirdparty', '', 'post', 'string', JREQUEST_ALLOWRAW);
 	  
 	  	 if($row->type == 'upload') {		
-			$dir = JFilterOutput::stringURLSafe( $row->category );	
+			//$dir = JFilterOutput::stringURLSafe( $row->category );
+			$dir = JFilterOutput::stringURLUnicodeSlug( $row->category );
+			
 		 	if(!JFolder::exists(ALLVIDEOSHARE_UPLOAD_BASE . $dir . DS)) {
 				JFolder::create(ALLVIDEOSHARE_UPLOAD_BASE . $dir . DS);
 			}
