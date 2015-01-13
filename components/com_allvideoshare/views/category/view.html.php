@@ -52,7 +52,26 @@ class AllVideoShareViewCategory extends AllVideoShareView {
 		$categories = $model->getsubcategories( $category->id, $rows * $cols );
 		$this->assignRef('categories', $categories);
 		
-		$videos = $model->getvideos($category->name, $rows * $cols);
+		$_videos = $model->getvideos($category->name, $rows * $cols);
+		$videos = array();
+		foreach ($_videos as $_video) {
+			// admins
+			if (JFactory::getUser()->authorise('core.login.admin')) {
+				$videos[] = $_video;
+			}
+			// registered
+			elseif (JFactory::getUser()->authorise('core.login.site')) {
+				if ($_video->access == 'registered' OR $_video->access == 'public') {
+					$videos[] = $_video;
+				}
+			}
+			// public
+			else {
+				if ($_video->access == 'public') {
+					$videos[] = $_video;
+				}
+			}
+		}
 		$this->assignRef('videos', $videos);
 		
 		$pagination = $model->getpagination();

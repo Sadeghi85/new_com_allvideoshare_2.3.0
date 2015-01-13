@@ -53,7 +53,26 @@ class AllVideoShareViewCategories extends AllVideoShareView {
 			}
 		}
 		
-		$categories = $model->getcategories($rows * $cols);
+		$_categories = $model->getcategories($rows * $cols);
+		$categories = array();
+		foreach ($_categories as $_category) {
+			// admins
+			if (JFactory::getUser()->authorise('core.login.admin')) {
+				$categories[] = $_category;
+			}
+			// registered
+			elseif (JFactory::getUser()->authorise('core.login.site')) {
+				if ($_category->access == 'registered' OR $_category->access == 'public') {
+					$categories[] = $_category;
+				}
+			}
+			// public
+			else {
+				if ($_category->access == 'public') {
+					$categories[] = $_category;
+				}
+			}
+		}
 		$this->assignRef('categories', $categories);
 		
 		$pagination = $model->getpagination();

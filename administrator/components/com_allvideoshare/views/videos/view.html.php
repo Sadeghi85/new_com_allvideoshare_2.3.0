@@ -92,6 +92,7 @@ class AllVideoShareViewVideos extends AllVideoShareView {
 		
 		$access_options[] = JHTML::_('select.option', 'public', JText::_('PUBLIC'));
 		$access_options[] = JHTML::_('select.option', 'registered', JText::_('REGISTERED'));
+		$access_options[] = JHTML::_('select.option', 'admin', JText::_('ADMIN'));
 		$access = JHTML::_('select.genericlist', $access_options, 'access', '', 'value', 'text', 'public');		 
 		$this->assignRef('access', $access);
 		
@@ -142,6 +143,7 @@ class AllVideoShareViewVideos extends AllVideoShareView {
 		
 		$access_options[] = JHTML::_('select.option', 'public', JText::_('PUBLIC'));
 		$access_options[] = JHTML::_('select.option', 'registered', JText::_('REGISTERED'));
+		$access_options[] = JHTML::_('select.option', 'admin', JText::_('ADMIN'));
 		$access = JHTML::_('select.genericlist', $access_options, 'access', '', 'value', 'text', $data->access);		 
 		$this->assignRef('access', $access);
 		

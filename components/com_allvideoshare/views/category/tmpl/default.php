@@ -11,10 +11,28 @@ defined('_JEXEC') or die('Restricted access');
 
 $category = $this->category;
 
-if(!$this->user && $category->access == 'registered') {
-	echo JText::_('YOU_NEED_TO_REGISTER_TO_VIEW_THIS_PAGE');
-	return;
+// admins
+if (JFactory::getUser()->authorise('core.login.admin')) {
 }
+// registered
+elseif (JFactory::getUser()->authorise('core.login.site')) {
+	if ( ! ($category->access == 'registered' OR $category->access == 'public')) {
+		echo JText::_('YOU_DONT_HAVE_PERMISSION_TO_VIEW_THIS_PAGE');
+		return;
+	}
+}
+// public
+else {
+	if ($category->access != 'public') {
+		echo JText::_('YOU_DONT_HAVE_PERMISSION_TO_VIEW_THIS_PAGE');
+		return;
+	}
+}
+
+// if(!$this->user && $category->access == 'registered') {
+	// echo JText::_('YOU_NEED_TO_REGISTER_TO_VIEW_THIS_PAGE');
+	// return;
+// }
 
 $config = $this->config;
 $videos = $this->videos;

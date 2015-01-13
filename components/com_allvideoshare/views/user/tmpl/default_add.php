@@ -9,10 +9,10 @@
 
 defined('_JEXEC') or die('Restricted access'); 
 
-if(!$this->user) {
-	echo JText::_('YOU_NEED_TO_REGISTER_TO_VIEW_THIS_PAGE');
-	return;
-}
+// if(!$this->user) {
+	// echo JText::_('YOU_NEED_TO_REGISTER_TO_VIEW_THIS_PAGE');
+	// return;
+// }
 
 $config = $this->config;
 $category = $this->category;

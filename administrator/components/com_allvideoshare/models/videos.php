@@ -31,6 +31,7 @@ class AllVideoShareModelVideos extends AllVideoShareModel {
 		 $limit = $mainframe->getUserStateFromRequest('global.list.limit', 'limit', $mainframe->getCfg('list_limit'), 'int');
 		 $limitstart = $mainframe->getUserStateFromRequest($option.$view.'.limitstart', 'limitstart', 0, 'int');
 		 $limitstart = ($limit != 0 ? (floor($limitstart / $limit) * $limit) : 0);
+		 $filter_access = $mainframe->getUserStateFromRequest($option.$view.'filter_access', 'filter_access', -1, 'none');
 		 $filter_state = $mainframe->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', -1, 'int');
 		 $filter_category = $mainframe->getUserStateFromRequest($option.$view.'filter_category', 'filter_category', '', 'string');
 		 $search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
@@ -39,6 +40,10 @@ class AllVideoShareModelVideos extends AllVideoShareModel {
 	     $db = JFactory::getDBO();
          $query = "SELECT * FROM #__allvideoshare_videos";
 		 $where = array();
+		 
+		 if ($filter_access != - 1) {
+			$where[] = "access='{$filter_access}'";
+		 }
 		 
 		 if ($filter_state > -1) {
 			$where[] = "published={$filter_state}";
@@ -70,6 +75,7 @@ class AllVideoShareModelVideos extends AllVideoShareModel {
 		 $option = JRequest::getCmd('option');
 		 $view = JRequest::getCmd('view');
 		 
+		 $filter_access = $mainframe->getUserStateFromRequest($option.$view.'filter_access', 'filter_access', -1, 'none');
 		 $filter_state = $mainframe->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', -1, 'int');
 		 $filter_category = $mainframe->getUserStateFromRequest($option.$view.'filter_category', 'filter_category', '', 'string');
 		 $search = $mainframe->getUserStateFromRequest($option.$view.'search', 'search', '', 'string');
@@ -79,6 +85,10 @@ class AllVideoShareModelVideos extends AllVideoShareModel {
          $query = "SELECT COUNT(*) FROM #__allvideoshare_videos";
 		 $where = array();
 		 
+		 if ($filter_access != - 1) {
+			$where[] = "access='{$filter_access}'";		
+		 }
+		
 		 if ($filter_state > -1) {
 			$where[] = "published={$filter_state}";
 		 }
@@ -120,6 +130,7 @@ class AllVideoShareModelVideos extends AllVideoShareModel {
 		 $option = JRequest::getCmd('option');
 		 $view = JRequest::getCmd('view');
 		 
+		 $filter_access = $mainframe->getUserStateFromRequest($option.$view.'filter_access', 'filter_access', -1, 'none' );
 		 $filter_state = $mainframe->getUserStateFromRequest($option.$view.'filter_state', 'filter_state', -1, 'int' );
 		 $filter_category = $mainframe->getUserStateFromRequest($option.$view.'filter_category', 'filter_category', '', 'string');
 		 $search = $mainframe->getUserStateFromRequest($option.$view.'search','search','','string');
@@ -128,6 +139,12 @@ class AllVideoShareModelVideos extends AllVideoShareModel {
     	 $lists = array ();
 		 $lists['search'] = $search;
             
+		 $filter_access_options[] = JHTML::_('select.option', -1, JText::_('SELECT_BY_ACCESS'));
+		 $filter_access_options[] = JHTML::_('select.option', 'public', JText::_('PUBLIC'));
+		 $filter_access_options[] = JHTML::_('select.option', 'registered', JText::_('REGISTERED'));
+		 $filter_access_options[] = JHTML::_('select.option', 'admin', JText::_('ADMIN'));
+		 $lists['access'] = JHTML::_('select.genericlist', $filter_access_options, 'filter_access', 'onchange="this.form.submit();"', 'value', 'text', $filter_access);
+		 
 		 $filter_state_options[] = JHTML::_('select.option', -1, JText::_('SELECT_PUBLISHING_STATE'));
 		 $filter_state_options[] = JHTML::_('select.option', 1, JText::_('PUBLISHED'));
 		 $filter_state_options[] = JHTML::_('select.option', 0, JText::_('UNPUBLISHED'));

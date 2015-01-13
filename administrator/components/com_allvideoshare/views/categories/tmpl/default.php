@@ -25,7 +25,7 @@ $data = $this->data;
 		  	<?php echo JText::_('RESET'); ?>
           </button>
         </td>
-        <td nowrap="nowrap"><?php echo $this->lists['categories']; ?><?php echo $this->lists['state']; ?></td>
+        <td nowrap="nowrap"><?php echo $this->lists['access']; ?><?php echo $this->lists['categories']; ?><?php echo $this->lists['state']; ?></td>
       </tr>
     </table>
     <div class="spacer"></div>
