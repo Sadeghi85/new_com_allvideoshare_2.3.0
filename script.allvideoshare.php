@@ -60,7 +60,7 @@ class COM_AllVideoShareInstallerScript {
 		$db->setQuery($query);
 		$num = $db->loadResult();	
 		if($num == 0) {
-			$query = "INSERT INTO `#__allvideoshare_players` (`id`, `name`, `width`, `height`, `loop`, `autostart`, `buffer`, `volumelevel`, `stretch`, `durationdock`, `timerdock`, `fullscreendock`, `hddock`, `embeddock`, `facebookdock`, `twitterdock`, `controlbaroutlinecolor`, `controlbarbgcolor`, `controlbaroverlaycolor`, `controlbaroverlayalpha`, `iconcolor`, `progressbarbgcolor`, `progressbarbuffercolor`, `progressbarseekcolor`, `volumebarbgcolor`, `volumebarseekcolor`, `published`) VALUES (1, 'Default', 700, 400, 0, 0, 3, 50, 'uniform', 1, 1, 1, 1, 1, 1, 1, '0x292929', '0x111111', '0x252525', 35, '0xDDDDDD', '0x090909', '0x121212', '0x202020', '0x252525', '0x555555', 1)";
+			$query = "INSERT INTO `#__allvideoshare_players` (`id`, `name`, `width`, `height`, `loop`, `autostart`, `buffer`, `volumelevel`, `stretch`, `durationdock`, `timerdock`, `fullscreendock`, `hddock`, `embeddock`, `facebookdock`, `twitterdock`, `controlbaroutlinecolor`, `controlbarbgcolor`, `controlbaroverlaycolor`, `controlbaroverlayalpha`, `iconcolor`, `progressbarbgcolor`, `progressbarbuffercolor`, `progressbarseekcolor`, `volumebarbgcolor`, `volumebarseekcolor`, `published`) VALUES (1, 'Default', 700, 400, 0, 0, 3, 50, 'uniform', 1, 1, 1, 1, 1, 0, 0, '0x292929', '0x111111', '0x252525', 35, '0xDDDDDD', '0x090909', '0x121212', '0x202020', '0x252525', '0x555555', 1)";
 			$db->setQuery($query);
 			$db->Query();
 	

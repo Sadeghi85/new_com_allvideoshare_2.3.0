@@ -34,7 +34,8 @@ $data = $this->data;
         <tr>
           <th width="5%">#</th>
           <th width="5%"><?php echo AllVideoShareFallback::checkAll($data); ?></th>
-          <th class="padlft"><?php echo JText::_('VIDEO_TITLE'); ?></th>
+          <th width="" class=""><?php echo JText::_('VIDEO_TITLE'); ?></th>
+		  <th width="12%" class=""><?php echo JText::_('DISPLAY_ON_SITE'); ?></th>
           <th width="12%" class="padlft"><?php echo JText::_('CATEGORY'); ?></th>
           <th width="14%" style="color:#666">
 		  	<?php echo JText::_('POSITION'); ?>&nbsp;&nbsp; <?php echo JHTML::_('grid.order',  $data ); ?>
@@ -62,8 +63,9 @@ $data = $this->data;
         <tr class="<?php echo "row$k"; ?>">
           <td class="ctr"><?php echo ($this->limitstart + $i + 1); ?> </td>
           <td class="ctr"><?php echo $checked; ?> </td>
-          <td class="padlft"><a href="<?php echo $link; ?>"> <?php echo $row->title;?> </a></td>
-          <td class="padlft"><?php echo $row->category;?> </td>
+          <td class="ctr"><a href="<?php echo $link; ?>"> <?php echo $row->title;?> </a></td>
+		  <td class="ctr"><a target="_blank" href="<?php echo str_ireplace('/administrator', '', JRoute::_("index.php?option=com_allvideoshare&view=video&slg=".$row->slug)); ?>"><?php echo JText::_('DISPLAY_ON_SITE'); ?></a> </td>
+          <td class="ctr"><?php echo $row->category;?> </td>
           <td class="order">
           	<span><?php echo $this->pagination->orderUpIcon( $i, ($row->category == @$data[$i-1]->category), 'orderup', 'MOVE_UP'); ?></span> <span><?php echo $this->pagination->orderDownIcon( $i, $n, ($row->category == @$data[$i+1]->category), 'orderdown', 'MOVE_DOWN'); ?></span>
             <input type="text" name="order[]" size="5" value="<?php echo $row->ordering; ?>" class="text_area" style="text-align: center" />
@@ -78,7 +80,7 @@ $data = $this->data;
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="10"><?php echo $this->pagination->getListFooter(); ?></td>
+          <td colspan="11"><?php echo $this->pagination->getListFooter(); ?></td>
         </tr>
       </tfoot>
     </table>

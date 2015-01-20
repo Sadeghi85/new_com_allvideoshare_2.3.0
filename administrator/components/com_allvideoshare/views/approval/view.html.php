@@ -64,14 +64,15 @@ class AllVideoShareViewApproval extends AllVideoShareView {
 		$data = $model->getrow();
 		$this->assignRef('data', $data);
 		
-		$type_options[] = JHTML::_('select.option', 'url', JText::_('DIRECT_URL'));
-		$type_options[] = JHTML::_('select.option', 'upload', JText::_('GENERAL_UPLOAD'));
-		$type_options[] = JHTML::_('select.option', 'youtube', JText::_('YOUTUBE'));
-		$type_options[] = JHTML::_('select.option', 'rtmp', JText::_('RTMP_STREAMING'));
+		//$type_options[] = JHTML::_('select.option', 'url', JText::_('DIRECT_URL'));
+		//$type_options[] = JHTML::_('select.option', 'upload', JText::_('GENERAL_UPLOAD'));
+		//$type_options[] = JHTML::_('select.option', 'youtube', JText::_('YOUTUBE'));
 		$type_options[] = JHTML::_('select.option', 'lighttpd', JText::_('LIGHTTPD'));
-		$type_options[] = JHTML::_('select.option', 'highwinds', JText::_('HIGHWINDS'));
-		$type_options[] = JHTML::_('select.option', 'bitgravity', JText::_('BITGRAVITY'));
-		$type_options[] = JHTML::_('select.option', 'thirdparty', JText::_('THIRD_PARTY_EMBEDCODE'));		
+		$type_options[] = JHTML::_('select.option', 'rtmp', JText::_('RTMP_STREAMING'));
+		//$type_options[] = JHTML::_('select.option', 'highwinds', JText::_('HIGHWINDS'));
+		//$type_options[] = JHTML::_('select.option', 'bitgravity', JText::_('BITGRAVITY'));
+		$type_options[] = JHTML::_('select.option', 'thirdparty', JText::_('THIRD_PARTY_EMBEDCODE'));
+		
 		$type = JHTML::_('select.genericlist', $type_options, 'type', 'onchange="javascript:changeType(this.options[this.selectedIndex].value);"', 'value', 'text', $data->type);
 		$this->assignRef('type', $type);
 		
@@ -86,6 +87,7 @@ class AllVideoShareViewApproval extends AllVideoShareView {
 		
 		$access_options[] = JHTML::_('select.option', 'public', JText::_('PUBLIC'));
 		$access_options[] = JHTML::_('select.option', 'registered', JText::_('REGISTERED'));
+		$access_options[] = JHTML::_('select.option', 'admin', JText::_('ADMIN'));
 		$access = JHTML::_('select.genericlist', $access_options, 'access', '', 'value', 'text', $data->access);		 
 		$this->assignRef('access', $access);
 		

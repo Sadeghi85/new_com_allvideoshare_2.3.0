@@ -33,6 +33,7 @@ $category = $this->category;
         <td class="avskey"><?php echo JText::_('TITLE'); ?></td>
         <td><input type="text" name="title" size="60" /></td>
       </tr>
+	  
 	  <tr id="upload_cdn_video">
         <td class="avskey"><?php echo JText::_('VIDEO'); ?></td>
         <td id="cdn_video"><input type="file" name="cdn_video" maxlength="100" />
@@ -152,6 +153,7 @@ $category = $this->category;
     <input type="hidden" name="published" value="<?php echo $config[0]->auto_approval; ?>" />
     <input type="hidden" name="user" value="<?php echo $this->user; ?>">
     <input type="hidden" name="Itemid" value="<?php echo JRequest::getInt('Itemid'); ?>">
+	
     <?php echo JHTML::_( 'form.token' ); ?>
   </form>
 </div>
@@ -164,7 +166,10 @@ var isAllowed       = true;
 changeType('cdn_upload');
 
 function submitbutton() {
-	var method = type.options[type.selectedIndex].value;
+
+	
+	//var method = type.options[type.selectedIndex].value;
+	var method = 'cdn_upload';
 	
 	if(form.category.value == '') {
 		alert( "<?php echo JText::_( 'YOU_HAVE_NOT_SELECTED_ANY_CATEGORY_FOR_THE_VIDEO', true); ?>" );
@@ -194,53 +199,55 @@ function submitbutton() {
 			isAllowed = checkExtension('PREVIEW', form.cdn_preview.value, imageExtensions);
 			if(isAllowed == false) 	return false;
 		}
-	} else if(method == 'upload') {
-		if(form.upload_video.value == '') {
-       		alert( "<?php echo JText::_( 'YOU_MUST_ADD_A_VIDEO', true); ?>" );
-       		return false;
-	    } else {
-			isAllowed = checkExtension('VIDEO', form.upload_video.value, videoExtensions);
-			if(isAllowed == false) 	return false;
-		}
+	}
+
+	// else if(method == 'upload') {
+		// if(form.upload_video.value == '') {
+       		// alert( "<?php echo JText::_( 'YOU_MUST_ADD_A_VIDEO', true); ?>" );
+       		// return false;
+	    // } else {
+			// isAllowed = checkExtension('VIDEO', form.upload_video.value, videoExtensions);
+			// if(isAllowed == false) 	return false;
+		// }
 		
-		if(form.upload_hd.value) {
-			isAllowed = checkExtension('HD VIDEO', form.upload_hd.value, videoExtensions);
-			if(isAllowed == false) 	return false;
-		}
+		// if(form.upload_hd.value) {
+			// isAllowed = checkExtension('HD VIDEO', form.upload_hd.value, videoExtensions);
+			// if(isAllowed == false) 	return false;
+		// }
 		
-		if(form.upload_preview.value) {
-			isAllowed = checkExtension('PREVIEW', form.upload_preview.value, imageExtensions);
-			if(isAllowed == false) 	return false;
-		}
-	} else if(method == 'url') {
-		if(form.video.value == '') {
-       		alert( "<?php echo JText::_( 'YOU_MUST_ADD_A_VIDEO', true); ?>" );
-       		return false;
-	    } else {
-			isAllowed = checkExtension('VIDEO', form.video.value, videoExtensions);
-			if(isAllowed == false) 	return false;
-		}
+		// if(form.upload_preview.value) {
+			// isAllowed = checkExtension('PREVIEW', form.upload_preview.value, imageExtensions);
+			// if(isAllowed == false) 	return false;
+		// }
+	// } else if(method == 'url') {
+		// if(form.video.value == '') {
+       		// alert( "<?php echo JText::_( 'YOU_MUST_ADD_A_VIDEO', true); ?>" );
+       		// return false;
+	    // } else {
+			// isAllowed = checkExtension('VIDEO', form.video.value, videoExtensions);
+			// if(isAllowed == false) 	return false;
+		// }
 		
-		if(form.hd.value) {
-			isAllowed = checkExtension('HD VIDEO', form.hd.value, videoExtensions);
-			if(isAllowed == false) 	return false;
-		}
+		// if(form.hd.value) {
+			// isAllowed = checkExtension('HD VIDEO', form.hd.value, videoExtensions);
+			// if(isAllowed == false) 	return false;
+		// }
 		
-		if(form.preview.value) {
-			isAllowed = checkExtension('PREVIEW', form.preview.value, imageExtensions);
-			if(isAllowed == false) 	return false;
-		}
-	} else if(method == 'rtmp') {
-		if(form.streamer.value == '') {
-       		alert( "<?php echo JText::_( 'YOU_MUST_ADD_THE_STREAMER_PATH', true); ?>" );
-       		return false;
-	    }
-	} else if(method == 'thirdparty') {
-		if(form.thirdparty.value == '') {
-       		alert( "<?php echo JText::_( 'YOU_MUST_ADD_ANY_THIRD_PARTY_EMBEDCODE', true); ?>" );
-       		return false;
-	    }
-	}	
+		// if(form.preview.value) {
+			// isAllowed = checkExtension('PREVIEW', form.preview.value, imageExtensions);
+			// if(isAllowed == false) 	return false;
+		// }
+	// } else if(method == 'rtmp') {
+		// if(form.streamer.value == '') {
+       		// alert( "<?php echo JText::_( 'YOU_MUST_ADD_THE_STREAMER_PATH', true); ?>" );
+       		// return false;
+	    // }
+	// } else if(method == 'thirdparty') {
+		// if(form.thirdparty.value == '') {
+       		// alert( "<?php echo JText::_( 'YOU_MUST_ADD_ANY_THIRD_PARTY_EMBEDCODE', true); ?>" );
+       		// return false;
+	    // }
+	// }	
 	
 	if(method != 'youtube') {
 		if(form.upload_thumb.value) {
@@ -264,64 +271,64 @@ function checkExtension(type, filePath, validExtensions) {
 }
 
 function changeType(typ) {
-	//document.getElementById('upload_cdn_video').style.display           = "none";
-	//document.getElementById('upload_cdn_thumb').style.display           = "none";
-	//document.getElementById('upload_cdn_preview').style.display         = "none";
+	document.getElementById('upload_cdn_video').style.display           = "none";
+	document.getElementById('upload_cdn_thumb').style.display           = "none";
+	document.getElementById('upload_cdn_preview').style.display         = "none";
 
-	document.getElementById('url_data_video').style.display              = "none";
-	document.getElementById('url_data_hd').style.display                 = "none";
-	document.getElementById('upload_data_video').style.display           = "none";
-	document.getElementById('upload_data_hd').style.display              = "none";
-	document.getElementById('upload_data_thumb').style.display           = "none";
-	document.getElementById('upload_data_preview').style.display         = "none";
-	document.getElementById('data_streamer').style.display               = "none";
-	document.getElementById('data_token').style.display                  = "none";
-	document.getElementById('data_dvr').style.display                    = "none";
-	document.getElementById('data_thirdparty').style.display             = "none";
+	//document.getElementById('url_data_video').style.display              = "none";
+	//document.getElementById('url_data_hd').style.display                 = "none";
+	//document.getElementById('upload_data_video').style.display           = "none";
+	//document.getElementById('upload_data_hd').style.display              = "none";
+	//document.getElementById('upload_data_thumb').style.display           = "none";
+	//document.getElementById('upload_data_preview').style.display         = "none";
+	//document.getElementById('data_streamer').style.display               = "none";
+	//document.getElementById('data_token').style.display                  = "none";
+	//document.getElementById('data_dvr').style.display                    = "none";
+	//document.getElementById('data_thirdparty').style.display             = "none";
     switch(typ) {
-		case 'url' :		
-			document.getElementById('url_data_video').style.display      = "";
-			document.getElementById('url_data_hd').style.display         = "";
-			document.getElementById('upload_data_thumb').style.display   = "";
-			document.getElementById('upload_data_preview').style.display = "";
-			break;
+		// case 'url' :		
+			// document.getElementById('url_data_video').style.display      = "";
+			// document.getElementById('url_data_hd').style.display         = "";
+			// document.getElementById('upload_data_thumb').style.display   = "";
+			// document.getElementById('upload_data_preview').style.display = "";
+			// break;
 		case 'cdn_upload':
 			document.getElementById('upload_cdn_video').style.display    = "";
 			document.getElementById('upload_cdn_thumb').style.display    = "";
 			document.getElementById('upload_cdn_preview').style.display  = "";
 			break;
-		case 'upload':
-			document.getElementById('upload_data_video').style.display   = "";
+		// case 'upload':
+			// document.getElementById('upload_data_video').style.display   = "";
 			document.getElementById('upload_data_hd').style.display      = "";
-			document.getElementById('upload_data_thumb').style.display   = "";
-			document.getElementById('upload_data_preview').style.display = "";
-			break;
-		case 'youtube':		
-			document.getElementById('url_data_video').style.display      = "";
-			break;
-		case 'highwinds':
-		case 'lighttpd' :
-			document.getElementById('url_data_video').style.display      = "";
-			document.getElementById('upload_data_thumb').style.display   = "";
-			document.getElementById('upload_data_preview').style.display = "";
-			break;
-		case 'rtmp':
-			document.getElementById('url_data_video').style.display      = "";
-			document.getElementById('upload_data_thumb').style.display   = "";
-			document.getElementById('upload_data_preview').style.display = "";
-			document.getElementById('data_streamer').style.display       = "";
-			document.getElementById('data_token').style.display          = "";
-			break;
-		case 'bitgravity':
-			document.getElementById('url_data_video').style.display      = "";
-			document.getElementById('upload_data_thumb').style.display   = "";
-			document.getElementById('upload_data_preview').style.display = "";
-			document.getElementById('data_dvr').style.display            = "";
-			break;
-		case 'thirdparty':
-			document.getElementById('upload_data_thumb').style.display   = "";
-			document.getElementById('data_thirdparty').style.display     = "";
-			break;
+			// document.getElementById('upload_data_thumb').style.display   = "";
+			// document.getElementById('upload_data_preview').style.display = "";
+			// break;
+		// case 'youtube':		
+			// document.getElementById('url_data_video').style.display      = "";
+			// break;
+		// case 'highwinds':
+		// case 'lighttpd' :
+			// document.getElementById('url_data_video').style.display      = "";
+			// document.getElementById('upload_data_thumb').style.display   = "";
+			// document.getElementById('upload_data_preview').style.display = "";
+			// break;
+		// case 'rtmp':
+			// document.getElementById('url_data_video').style.display      = "";
+			// document.getElementById('upload_data_thumb').style.display   = "";
+			// document.getElementById('upload_data_preview').style.display = "";
+			// document.getElementById('data_streamer').style.display       = "";
+			// document.getElementById('data_token').style.display          = "";
+			// break;
+		// case 'bitgravity':
+			// document.getElementById('url_data_video').style.display      = "";
+			// document.getElementById('upload_data_thumb').style.display   = "";
+			// document.getElementById('upload_data_preview').style.display = "";
+			// document.getElementById('data_dvr').style.display            = "";
+			// break;
+		// case 'thirdparty':
+			// document.getElementById('upload_data_thumb').style.display   = "";
+			// document.getElementById('data_thirdparty').style.display     = "";
+			// break;
 
 	}	
 }
