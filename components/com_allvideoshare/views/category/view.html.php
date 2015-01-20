@@ -52,7 +52,8 @@ class AllVideoShareViewCategory extends AllVideoShareView {
 		$categories = $model->getsubcategories( $category->id, $rows * $cols );
 		$this->assignRef('categories', $categories);
 		
-		$_videos = $model->getvideos($category->name, $rows * $cols);
+		//$_videos = $model->getvideos($category->name, $rows * $cols);
+		$_videos = $model->getvideos($category->slug, $rows * $cols);
 		$videos = array();
 		foreach ($_videos as $_video) {
 			// admins

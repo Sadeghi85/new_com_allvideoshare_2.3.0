@@ -268,9 +268,34 @@ class AllVideoShareModelCategories extends AllVideoShareModel {
 	   	jimport( 'joomla.filter.output' );
 	  	//$row->name = JRequest::getVar('name', '', 'post', 'string', JREQUEST_ALLOWHTML);
 		$row->name = JString::trim($row->name);
+		
+		$db = JFactory::getDBO();
+		if ($row->id) {
+			$query = "SELECT id FROM #__allvideoshare_categories WHERE name='".$row->name."' AND id != ".$row->id;
+		} else {
+			$query = "SELECT id FROM #__allvideoshare_categories WHERE name='".$row->name."'";
+		}
+		$db->setQuery($query);
+		$array = (ALLVIDEOSHARE_JVERSION == '3.0') ? $db->loadColumn() : $db->loadResultArray();
+		if ( ! empty($array)) {
+			$row->name .= '-'.str_replace('.', '-', microtime(TRUE));
+		}
+		
 	  	if(!$row->slug) $row->slug = $row->name;
 		//$row->slug = JFilterOutput::stringURLSafe($row->slug);
 		$row->slug = JFilterOutput::stringURLUnicodeSlug($row->slug);
+		
+		$db = JFactory::getDBO();
+		if ($row->id) {
+			$query = "SELECT id FROM #__allvideoshare_categories WHERE slug='".$row->slug."' AND id != ".$row->id;
+		} else {
+			$query = "SELECT id FROM #__allvideoshare_categories WHERE slug='".$row->slug."'";
+		}
+		$db->setQuery($query);
+		$array = (ALLVIDEOSHARE_JVERSION == '3.0') ? $db->loadColumn() : $db->loadResultArray();
+		if ( ! empty($array)) {
+			$row->slug .= '-'.str_replace('.', '-', microtime(TRUE));
+		}
 	  
 	  	if($row->type == 'upload') {
 			$dir = JFilterOutput::stringURLSafe( $row->name );	
