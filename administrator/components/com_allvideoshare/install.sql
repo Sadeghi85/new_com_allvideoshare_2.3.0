@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `#__allvideoshare_categories` (
   `ordering` int(5) NOT NULL,
   `metakeywords` text NOT NULL,
   `metadescription` text NOT NULL,
+  `uploadable` tinyint(4) NOT NULL DEFAULT '0',
   `published` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

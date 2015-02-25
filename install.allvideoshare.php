@@ -179,7 +179,11 @@ if(version_compare(JVERSION, '1.6.0', '<')) {
 		$db->setQuery($query);
 		$db->query();
 	}
-	
+	if(!array_key_exists('uploadable', $fields_categories)) {
+		$query = "ALTER TABLE #__allvideoshare_categories ADD `uploadable` tinyint(4) NOT NULL DEFAULT 0 AFTER `metadescription`";
+		$db->setQuery($query);
+		$db->query();
+	}
 	// Database modifications [end]
 	
 	// Remove old version files		

@@ -50,15 +50,19 @@ class AllVideoShareViewUser extends AllVideoShareView {
 			// registered
 			elseif (JFactory::getUser()->authorise('core.login.site')) {
 				if ($item->access == 'registered' OR $item->access == 'public') {
-					$item->treename = JString::str_ireplace('&#160;', '-', $item->treename);
-					$category_options[] = JHTML::_('select.option', $item->name, $item->treename );
+					if ($item->uploadable) {
+						$item->treename = JString::str_ireplace('&#160;', '-', $item->treename);
+						$category_options[] = JHTML::_('select.option', $item->name, $item->treename );
+					}
 				}
 			}
 			// public
 			else {
 				if ($item->access == 'public') {
-					$item->treename = JString::str_ireplace('&#160;', '-', $item->treename);
-					$category_options[] = JHTML::_('select.option', $item->name, $item->treename );
+					if ($item->uploadable) {
+						$item->treename = JString::str_ireplace('&#160;', '-', $item->treename);
+						$category_options[] = JHTML::_('select.option', $item->name, $item->treename );
+					}
 				}
 			}
 		}

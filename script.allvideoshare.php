@@ -203,7 +203,12 @@ class COM_AllVideoShareInstallerScript {
 			$db->setQuery($query);
 			$db->query();
 		}
-		
+		if(!array_key_exists('uploadable', $fields_categories)) {
+			$query = "ALTER TABLE #__allvideoshare_categories ADD `uploadable` tinyint(4) NOT NULL DEFAULT 0 AFTER `metadescription`";
+			$db->setQuery($query);
+			$db->query();
+		}
+	
 		// Remove old version files		
 		if (JFile::exists(JPATH_ADMINISTRATOR.'/components/com_allvideoshare/tables/allvideosharecategories.php')) {
 			JFile::delete(JPATH_ADMINISTRATOR.'/components/com_allvideoshare/tables/allvideosharecategories.php');

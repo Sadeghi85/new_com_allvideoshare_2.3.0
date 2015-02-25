@@ -55,6 +55,10 @@ $data = $this->data;
         <td class="avskey"><?php echo JText::_('ACCESS');?></td>
         <td><?php echo $this->access; ?></td>
       </tr>
+	  <tr>
+        <td class="avskey"><?php echo JText::_('UPLOADABLE'); ?></td>
+        <td><?php echo AllVideoShareUtils::ListBoolean('uploadable', $data->uploadable); ?></td>
+      </tr>
       <tr>
         <td class="avskey"><?php echo JText::_('PUBLISH'); ?></td>
         <td><?php echo AllVideoShareUtils::ListBoolean('published', $data->published); ?></td>
