@@ -86,9 +86,31 @@ $isResponsive = ($config[0]->responsive == 1) ? 'class="avs_responsive"' : 'styl
     <div style="clear:both;"></div>
   </div>
   <?php echo $player; ?>
-  <?php if($config[0]->description) { ?>
+  <?php if($config[0]->description and $video->description) { ?>
   	<div class="avs_video_description"><?php echo $video->description; ?></div>
-  <?php } 
+  <?php }
+	
+	$tags = $video->tags;
+	$tags = preg_match_all('#\b([\p{M}\p{N}\p{L}]+?)\b#u', $tags, $matches);
+	if ($tags) {
+  ?>
+  
+	<div class="avs_video_tags">
+	<?php
+		foreach ($matches[1] as $match):
+			if (trim($match)) {
+				
+	?>
+	<a href="<?= JRoute::_('index.php?option=com_allvideoshare&view=search&avssearch='. $match) ?>"><?= $match ?></a>&nbsp;&nbsp;
+	<?php
+				}
+				
+		endforeach;
+	?>
+	</div>
+  
+  <?php
+	}
 	if($config[0]->layout != 'none') {
 		echo $this->loadTemplate($config[0]->layout); 
 	}
