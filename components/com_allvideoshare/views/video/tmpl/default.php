@@ -91,7 +91,7 @@ $isResponsive = ($config[0]->responsive == 1) ? 'class="avs_responsive"' : 'styl
   <?php }
 	
 	$tags = $video->tags;
-	$tags = preg_match_all('#\b([\p{M}\p{N}\p{L}]+?)\b#u', $tags, $matches);
+	$tags = preg_match_all('#(?<=^|\p{Z}|\p{P}|\p{C}|\p{S})([\p{M}\p{N}\p{L}]+?)(?=$|\p{Z}|\p{P}|\p{C}|\p{S})#u', $tags, $matches);
 	if ($tags) {
   ?>
   
