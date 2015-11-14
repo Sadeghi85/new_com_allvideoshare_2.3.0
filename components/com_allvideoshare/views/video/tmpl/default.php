@@ -87,21 +87,30 @@ $isResponsive = ($config[0]->responsive == 1) ? 'class="avs_responsive"' : 'styl
   </div>
   <?php echo $player; ?>
   <?php if($config[0]->description and $video->description) { ?>
+	<br>
   	<div class="avs_video_description"><?php echo $video->description; ?></div>
   <?php }
 	
+	$tags_array = array();
 	$tags = $video->tags;
-	$tags = preg_match_all('#(?<=^|\p{Z}|\p{P}|\p{C}|\p{S})([\p{M}\p{N}\p{L}]+?)(?=$|\p{Z}|\p{P}|\p{C}|\p{S})#u', $tags, $matches);
-	if ($tags) {
+	//$tags = preg_match_all('#(?<=^|\p{Z}|\p{P}|\p{C}|\p{S})([\p{M}\p{N}\p{L}]+?)(?=$|\p{Z}|\p{P}|\p{C}|\p{S})#u', $tags, $matches);
+	preg_match_all('#("[\p{M}\p{N}\p{L} ]+")#u', $tags, $matches);
+	$tags = preg_replace('#("[\p{M}\p{N}\p{L} ]+")#u', '', $tags);
+	$tags_array = array_merge($tags_array, $matches[1]);
+	preg_match_all('#(?<=^|\p{Z}|\p{P}|\p{C}|\p{S})([\p{M}\p{N}\p{L}]+?)(?=$|\p{Z}|\p{P}|\p{C}|\p{S})#u', $tags, $matches);
+	$tags_array = array_merge($tags_array, $matches[1]);
+	
+	if ( ! empty($tags_array)) {
   ?>
   
+	<br>
 	<div class="avs_video_tags">
 	<?php
-		foreach ($matches[1] as $match):
-			if (trim($match)) {
+		foreach ($tags_array as $tag):
+			if (trim($tag)) {
 				
 	?>
-	<a href="<?= JRoute::_('index.php?option=com_allvideoshare&view=search&avssearch='. $match) ?>"><?= $match ?></a>&nbsp;&nbsp;
+	<a href="<?php echo JRoute::_('index.php?option=com_allvideoshare&view=search&avssearch=').urlencode($tag) ?>"><?php echo $tag ?></a>&nbsp;&nbsp;
 	<?php
 				}
 				
@@ -111,6 +120,15 @@ $isResponsive = ($config[0]->responsive == 1) ? 'class="avs_responsive"' : 'styl
   
   <?php
 	}
+	?>
+
+	<br>
+	<div>
+	<a href="<?php echo $video->video ?>"><img style="" alt="download" src="<?php echo JURI::root().'components/com_allvideoshare/assets/download.jpg'; ?>"></a>
+	</div>
+	
+	<?php
+	
 	if($config[0]->layout != 'none') {
 		echo $this->loadTemplate($config[0]->layout); 
 	}
